@@ -24,7 +24,7 @@ param = {
 
 
 if __name__ == "__main__":
-    device = "cpu"
+    device = "cuda"
     if device == "mps":
         os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
     api_app = APIWrapper()

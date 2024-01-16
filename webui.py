@@ -25,9 +25,15 @@ from config import config
 from tools.translate import translate
 import librosa
 
-net_g = None
+#device = config.webui_config.device
+device = "cuda"
+hps = utils.get_hparams_from_file(config.webui_config.config_path)
+# 若config.json中未指定版本则默认为最新版本
+version = hps.version if hasattr(hps, "version") else latest_version
+net_g = get_net_g(
+    model_path=config.webui_config.model, version=version, device=device, hps=hps
+)
 
-device = config.webui_config.device
 if device == "mps":
     os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
@@ -379,6 +385,7 @@ if __name__ == "__main__":
     hps = utils.get_hparams_from_file(config.webui_config.config_path)
     # 若config.json中未指定版本则默认为最新版本
     version = hps.version if hasattr(hps, "version") else latest_version
+    print(device)
     net_g = get_net_g(
         model_path=config.webui_config.model, version=version, device=device, hps=hps
     )

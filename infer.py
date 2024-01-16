@@ -91,6 +91,7 @@ def get_net_g(model_path: str, version: str, device: str, hps):
         ).to(device)
     else:
         # 当前版本模型 net_g
+        print(device)
         net_g = SynthesizerTrn(
             len(symbols),
             hps.data.filter_length // 2 + 1,
